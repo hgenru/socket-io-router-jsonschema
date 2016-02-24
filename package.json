@@ -1,0 +1,33 @@
+{
+  "name": "socket-io-router-jsonschema",
+  "version": "0.0.1",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hgenru/socket-io-router-jsonschema.git"
+  },
+  "keywords": [
+    "socket.io",
+    "router",
+    "jsonschema"
+  ],
+  "author": "hgenru",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hgenru/socket-io-router-jsonschema/issues"
+  },
+  "homepage": "https://github.com/hgenru/socket-io-router-jsonschema#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-like": "^0.1.9",
+    "istanbul": "^0.4.2",
+    "mocha": "^2.4.5"
+  },
+  "peer-dependencies": {
+    "socket-io-router": "https://github.com/hgenru/socket-io-router.git"
+  }
+}
