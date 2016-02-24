@@ -58,7 +58,7 @@ describe('schema', function() {
         yield done;
     }));
 
-    it('test result on good data', co.wrap(function*() {
+    it('test success on good data', co.wrap(function*() {
         let config = {success: ajv.compile(TEST_SCHEMA1)};
         router.route('test', [
             schema(config),
@@ -68,6 +68,56 @@ describe('schema', function() {
         yield client._connect;
         client.on(':test:success', done.resolve);
         client.on(':test:error', done.reject);
+        client.emit(':test');
+        yield done;
+    }));
+
+    it('test success on wrong data', co.wrap(function*() {
+        let config = {success: ajv.compile(TEST_SCHEMA1)};
+        router.route('test', [
+            schema(config),
+            (ctx) => ctx.success({field1: 'ffff'})
+        ]);
+        let client = utils.createClient(server);
+        yield client._connect;
+        client.on(':test:error', (err) => {
+            err.should.have.property('code', 400);
+            err.should.have.property('errors');
+            done.resolve();
+        });
+        client.emit(':test');
+        yield done;
+    }));
+
+    it('test error on good data', co.wrap(function*() {
+        let config = {error: ajv.compile(TEST_SCHEMA1)};
+        router.route('test', [
+            schema(config),
+            (ctx) => ctx.error({field1: 1})
+        ]);
+        let client = utils.createClient(server);
+        yield client._connect;
+        client.on(':test:error', (err) => {
+            err.should.have.property('field1', 1);
+            done.resolve();
+        });
+        client.emit(':test');
+        yield done;
+    }));
+
+    it('test error on wrong data', co.wrap(function*() {
+        let config = {error: ajv.compile(TEST_SCHEMA1)};
+        router.route('test', [
+            schema(config),
+            (ctx) => ctx.error({field1: 'a-a-a'})
+        ]);
+        let client = utils.createClient(server);
+        yield client._connect;
+        client.on(':test:error', (err) => {
+            err.should.have.property('code', 400);
+            err.should.have.property('errors');
+            done.resolve();
+        });
         client.emit(':test');
         yield done;
     }));
