@@ -4,7 +4,8 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_ENV=testing ./node_modules/.bin/mocha --harmony --reporter spec ./tests/**/*test-*.js",
+    "coverage": "NODE_ENV=testing node ./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha \"./tests/**/*test-*.js\""
   },
   "repository": {
     "type": "git",
@@ -24,10 +25,15 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-like": "^0.1.9",
+    "freeport": "^1.0.5",
     "istanbul": "^0.4.2",
-    "mocha": "^2.4.5"
+    "mocha": "^2.4.5",
+    "native-promisify": "^1.2.0",
+    "socket.io": "^1.4.5",
+    "ajv": "^3.7.2",
+    "co": "^4.6.0"
   },
-  "peer-dependencies": {
+  "peerDependencies": {
     "socket-io-router": "https://github.com/hgenru/socket-io-router.git"
   }
 }
